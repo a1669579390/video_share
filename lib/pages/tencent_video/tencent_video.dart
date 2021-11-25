@@ -164,6 +164,7 @@ class _FirstItemState extends State<FirstItem> {
   final _channelList = Api.tVideochannelList;
   RxList _channelListData = [].obs;
   List<DropdownMenuItem<Object>>? _tabs = [];
+  Object? selectedItem = null;
 
   @override
   void initState() {
@@ -222,8 +223,10 @@ class _FirstItemState extends State<FirstItem> {
         ),
         child: Center(
             child: DropdownButton(
+                alignment: AlignmentDirectional.centerStart,
                 // icon: Icon(Icons.arrow_drop_down,
                 dropdownColor: Colors.amber.shade200,
+                value: selectedItem,
                 icon: Container(),
                 iconSize: 20,
                 iconEnabledColor: Colors.green.withOpacity(0.7),
@@ -236,11 +239,13 @@ class _FirstItemState extends State<FirstItem> {
                         style: TextStyle(
                           color: Color.fromRGBO(0, 0, 0, 1),
                         ))),
-                isExpanded: true,
+                isExpanded: false,
                 underline: Container(),
                 items: _tabs,
-                onChanged: (value) =>
-                    {Get.find<SimpleController>()._loading(channel: value)})));
+                onChanged: (value) => {
+                      Get.find<SimpleController>()._loading(channel: value),
+                      setState(() => selectedItem = value!)
+                    })));
   }
 }
 
