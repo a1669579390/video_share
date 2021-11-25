@@ -1,7 +1,8 @@
+// ignore_for_file: unnecessary_brace_in_string_interps
+
 import 'dart:collection';
 import 'dart:developer';
 import 'dart:io';
-import 'package:flutter/scheduler.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
@@ -12,6 +13,7 @@ import 'package:video_share/request/api_response.dart';
 import 'package:video_share/request/http_utils.dart';
 import 'package:video_share/schema/t_video_anthology.dart';
 import 'package:video_share/utils/api.dart';
+import 'package:video_share/utils/toast.dart';
 
 class InAppWebViewScreen extends StatefulWidget {
   @override
@@ -47,6 +49,7 @@ class _InAppWebViewScreenState extends State<InAppWebViewScreen>
   List<Widget> _tabs = [];
   List<Widget> _tabViews = [];
   RxInt _viewsHeight = 0.obs;
+  RxString _webUri = "".obs;
 
   late TabController _tabcontroller;
 
@@ -67,7 +70,13 @@ class _InAppWebViewScreenState extends State<InAppWebViewScreen>
       for (var d in element!.data!) {
         views.add(TextButton(
           child: Text('${d?.title}'),
-          onPressed: () {},
+          onPressed: () {
+            if (Uri.parse('${d?.playUrl}').scheme.isNotEmpty) {
+              webViewController?.loadUrl(
+                  urlRequest: URLRequest(
+                      url: Uri.parse('https://okjx.cc/?url=${d?.playUrl}')));
+            }
+          },
         ));
       }
       tabViews.add(Wrap(
@@ -240,12 +249,12 @@ class _InAppWebViewScreenState extends State<InAppWebViewScreen>
                   },
                 ),
               ),
-              progress < 1.0
-                  ? LinearProgressIndicator(
-                      value: progress,
-                      color: Colors.amber,
-                    )
-                  : Container(),
+              // progress < 1.0
+              //     ? LinearProgressIndicator(
+              //         value: progress,
+              //         color: Colors.amber,
+              //       )
+              //     : Container(),
               Positioned(
                 top: 300,
                 child: Container(
@@ -293,16 +302,18 @@ class _InAppWebViewScreenState extends State<InAppWebViewScreen>
   }
 
   Future<ApiResponse<TVideoAnthologyList>> getData() async {
-    // EasyLoading.show(status: 'loading...');
+    EasyLoading.show(status: 'loading...');
     dynamic res = await HttpUtils.post('${_baseUrl}${_VideoDetails}',
         data: {"cid": '$_cid'});
     TVideoAnthologyList data = TVideoAnthologyList.fromJson(res);
-    // EasyLoading.dismiss();
-
+    EasyLoading.dismiss();
     return ApiResponse.completed(data);
   }
 
   Future<void> _loading() async {
+    if (!mounted) {
+      return;
+    }
     ApiResponse<TVideoAnthologyList> tVideoDataResponse = await getData();
     if (tVideoDataResponse.status == Status.COMPLETED) {
       setState(() {
@@ -322,6 +333,9 @@ class _InAppWebViewScreenState extends State<InAppWebViewScreen>
           }
         });
       getTabs();
+    } else if (tVideoDataResponse.status == Status.ERROR) {
+      String errMsg = tVideoDataResponse.exception!.getMessage();
+      publicToast(errMsg);
     }
   }
 }

@@ -62,3 +62,38 @@ class TVideoDataItemList {
     data = arr;
   }
 }
+
+class TVideoChannelListData {
+  late String href;
+  late String key;
+  TVideoChannelListData({
+    required this.href,
+    required this.key,
+  });
+  TVideoChannelListData.fromJson(Map<String, dynamic> json) {
+    href = json["href"].toString();
+    key = json["key"].toString();
+  }
+}
+
+class TVideoChannelList {
+  late int code;
+  late String msg;
+  late List<TVideoChannelListData?> data;
+  // List<>
+
+  TVideoChannelList(
+      {required this.code, required this.msg, required this.data});
+
+  TVideoChannelList.fromJson(Map<String, dynamic> json) {
+    code = json["code"].toInt();
+    msg = json["msg"].toString();
+    final v = json["data"];
+
+    final arr = <TVideoChannelListData>[];
+    v.forEach((e) {
+      arr.add(TVideoChannelListData.fromJson(e));
+    });
+    data = arr;
+  }
+}

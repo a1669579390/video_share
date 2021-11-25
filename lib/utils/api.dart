@@ -4,10 +4,12 @@ class Api {
   String get appName => isProd ? 'App' : 'App (Debug)';
 
   String get baseUrl =>
-      isProd ? 'http://39.103.179.207:3000' : 'http://39.103.179.207:3000';
+      isProd ? 'http://39.103.179.207:3000' : 'http://127.0.0.1:3000';
 
   //首页精选数据
   static String tVideoHome = "/t_video_home";
   //选集列表
   static String tVideoDetails = "/t_video_details";
+  //腾讯视频分类
+  static String tVideochannelList = "/t_video_home/channel_list";
 }
