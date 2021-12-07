@@ -2,6 +2,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:simple_animations/simple_animations.dart';
 import 'package:supercharged/supercharged.dart';
+import 'package:video_share/pages/search/search_bar.dart';
 
 enum _ColorTween { color1, color2 }
 
@@ -120,17 +121,28 @@ class AnimatedBackground extends StatelessWidget {
       duration: tween.duration,
       builder: (context, child, value) {
         return Container(
-          decoration: BoxDecoration(
-              gradient: LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                  colors: [
-                Colors.white, Colors.white, Colors.black26, Colors.black45
-                // value.get<Color>(_ColorTween.color1),
-                // value.get<Color>(_ColorTween.color2)
-              ])),
-          // child: Text('111'), 这里传入widget
-        );
+            decoration: BoxDecoration(
+                gradient: LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: [
+                  Color(0xffF4D144), Colors.greenAccent,
+                  // value.get<Color>(_ColorTween.color1),
+                  // value.get<Color>(_ColorTween.color2)
+                ])),
+            child: Container(
+              padding: EdgeInsets.only(
+                  // top: MediaQuery.of(context).padding.top,
+                  ),
+              child: Stack(
+                children: [
+                  Positioned(
+                    child: FloatingSearchAppBarExample(),
+                  ),
+                ],
+              ),
+            ) // 这里传入widget
+            );
       },
     );
   }

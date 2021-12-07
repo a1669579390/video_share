@@ -3,9 +3,8 @@ class Api {
 
   String get appName => isProd ? 'App' : 'App (Debug)';
 
-  String get baseUrl => isProd
-      ? 'http://39.103.179.207:3000'
-      : 'http://7ed9-115-60-16-244.ngrok.io';
+  String get baseUrl =>
+      isProd ? 'http://39.103.179.207:3000' : 'http://127.0.0.1:3000';
 
   //首页精选数据
   static String tVideoHome = "/t_video_home";
