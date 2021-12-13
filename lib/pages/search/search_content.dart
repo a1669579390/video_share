@@ -10,7 +10,6 @@ class SearchContent extends StatefulWidget {
 }
 
 class _SearchContentState extends State<SearchContent> {
-  RxString type = Get.find<SearchModelController>().type;
   @override
   void initState() {
     // TODO: implement initState

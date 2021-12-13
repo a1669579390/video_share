@@ -42,9 +42,8 @@ class FloatingSearchAppBar extends StatelessWidget {
                       icon: Get.find<SearchModelController>().showMapping
                           ? const Icon(Icons.arrow_downward_rounded)
                           : const Icon(Icons.menu),
-                      onPressed: () {
-                        Get.find<SearchModelController>().setShowMapping();
-                      })),
+                      onPressed: () =>
+                          Get.find<SearchModelController>().setShowMapping())),
               Text("${mapping[_type]}", style: const TextStyle(fontSize: 11))
             ],
             //搜索框右边图标

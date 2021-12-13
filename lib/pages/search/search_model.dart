@@ -7,10 +7,10 @@ class SearchModelController extends GetxController {
   String _query = '';
   String get query => _query;
 
-  final RxString _type = 'b'.obs;
+  RxString _type = 'b'.obs;
   RxString get type => _type.obs.value;
 
-  final RxString _key = ''.obs;
+  RxString _key = ''.obs;
   RxString get key => _key.obs.value;
 
   bool _showMapping = false;

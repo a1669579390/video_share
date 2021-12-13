@@ -41,13 +41,13 @@ class AnimatedBackground extends StatelessWidget {
 
           child: Stack(
             children: [
-              const Positioned(
+              Positioned(
                 child: FloatingSearchAppBar(),
               ),
               Positioned(
                   top: MediaQuery.of(context).padding.top + 56,
                   left: 10,
-                  child: const SearchMenu()),
+                  child: SearchMenu()),
               Positioned(
                   top: MediaQuery.of(context).padding.top + 70,
                   child: SearchContent())
