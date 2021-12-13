@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -10,6 +11,10 @@ class FloatingSearchAppBarExample extends StatelessWidget {
   // const FloatingSearchAppBarExample({Key key}) : super(key: key);
 
   Widget build(BuildContext context) {
+    Get.put(SearchModelController());
+    RxString _type = Get.find<SearchModelController>().type;
+    Map mapping = Get.find<SearchModelController>().mapping;
+    String query = Get.find<SearchModelController>().query;
     final isPortrait =
         MediaQuery.of(context).orientation == Orientation.portrait;
 
@@ -29,27 +34,30 @@ class FloatingSearchAppBarExample extends StatelessWidget {
             debounceDelay: const Duration(milliseconds: 400),
             progress: Get.find<SearchModelController>().isLoading,
             onQueryChanged: Get.find<SearchModelController>().onQueryChanged,
+            onSubmitted: Get.find<SearchModelController>().onSubmitted,
             transition: CircularFloatingSearchBarTransition(),
             //搜索框左边图标
             leadingActions: [
               FloatingSearchBarAction(
                   showIfOpened: false,
-                  child:
-                      CircularButton(icon: Icon(Icons.menu), onPressed: () {})),
-              // FloatingSearchBarAction.searchToClear(
-              //   showIfClosed: false,
-              // ),
+                  child: CircularButton(
+                      icon: Get.find<SearchModelController>().showMapping
+                          ? Icon(Icons.arrow_downward_rounded)
+                          : Icon(Icons.menu),
+                      onPressed: () {
+                        Get.find<SearchModelController>().setShowMapping();
+                      })),
+              Text("${mapping[_type]}", style: TextStyle(fontSize: 11))
             ],
             //搜索框右边图标
             actions: [
-              FloatingSearchBarAction(
-                showIfOpened: false,
-                child:
-                    CircularButton(icon: Icon(Icons.search), onPressed: () {}),
-              ),
-              FloatingSearchBarAction.searchToClear(
-                showIfClosed: false,
-              ),
+              query.isEmpty
+                  ? FloatingSearchBarAction(
+                      showIfOpened: true,
+                      child: CircularButton(
+                          icon: Icon(Icons.search), onPressed: () {}),
+                    )
+                  : FloatingSearchBarAction.searchToClear(),
             ],
             builder: (context, transition) {
               return ClipRRect(

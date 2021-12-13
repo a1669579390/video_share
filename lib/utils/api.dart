@@ -14,4 +14,6 @@ class Api {
   static String tVideochannelList = "/t_video_home/channel_list";
   //加载更多
   static String tVideoLoadMore = "/t_video_home/load_more";
+  //聚合搜索
+  static String aggregateSearch = "/aggregate_search";
 }

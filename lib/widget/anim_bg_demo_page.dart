@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:simple_animations/simple_animations.dart';
 import 'package:supercharged/supercharged.dart';
 import 'package:video_share/pages/search/search_bar.dart';
+import 'package:video_share/pages/search/search_menu.dart';
 
 enum _ColorTween { color1, color2 }
 
@@ -139,6 +140,10 @@ class AnimatedBackground extends StatelessWidget {
                   Positioned(
                     child: FloatingSearchAppBarExample(),
                   ),
+                  Positioned(
+                      top: MediaQuery.of(context).padding.top + 56,
+                      left: 10,
+                      child: SearchMenu())
                 ],
               ),
             ) // 这里传入widget
