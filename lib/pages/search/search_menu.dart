@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:video_share/pages/search/search_model.dart';
@@ -9,8 +7,6 @@ class SearchMenu extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    RxString _type = Get.find<SearchModelController>().type;
-    Map mapping = Get.find<SearchModelController>().mapping;
     bool _showMapping = Get.find<SearchModelController>().showMapping;
     return _showMapping
         ? AnimatedSwitcher(
@@ -21,7 +17,7 @@ class SearchMenu extends StatelessWidget {
               );
             },
             key: key,
-            duration: Duration(milliseconds: 150),
+            duration: const Duration(milliseconds: 150),
             child: Column(
               children: [
                 GestureDetector(
@@ -34,8 +30,8 @@ class SearchMenu extends StatelessWidget {
                       width: 120,
                       alignment: Alignment.center,
                       height: 40,
-                      child: Text("哔哩哔哩"),
-                      decoration: BoxDecoration(color: Colors.white),
+                      child: const Text("哔哩哔哩"),
+                      decoration: const BoxDecoration(color: Colors.white),
                     )),
                 GestureDetector(
                     onTap: () {
@@ -46,8 +42,8 @@ class SearchMenu extends StatelessWidget {
                       width: 120,
                       alignment: Alignment.center,
                       height: 40,
-                      child: Text("腾讯视频"),
-                      decoration: BoxDecoration(color: Colors.white),
+                      child: const Text("腾讯视频"),
+                      decoration: const BoxDecoration(color: Colors.white),
                     ))
               ],
             ))
@@ -59,7 +55,7 @@ class SearchMenu extends StatelessWidget {
               );
             },
             key: key,
-            duration: Duration(milliseconds: 150),
+            duration: const Duration(milliseconds: 150),
             child: Container());
   }
 }

@@ -7,9 +7,6 @@
 // import 'package:flutter_getx_template/pages/proxy/proxy_view.dart';
 import 'package:get/get.dart';
 import 'package:video_share/pages/not_found/not_found_page.dart';
-import 'package:video_share/player/chrome_safari_browser_example.screen.dart';
-import 'package:video_share/player/headless_in_app_webview.screen.dart';
-import 'package:video_share/player/in_app_browser_example.screen.dart';
 import 'package:video_share/player/player.dart';
 part 'app_routes.dart';
 
@@ -19,7 +16,7 @@ class AppPages {
   static final routes = [
     GetPage(
       name: AppRoutes.Index,
-      page: () => NotFoundPage(),
+      page: () => const NotFoundPage(),
     ),
     GetPage(
       name: AppRoutes.Tvideo,
@@ -34,7 +31,7 @@ class AppPages {
 
   static final unknownRoute = GetPage(
     name: AppRoutes.NotFound,
-    page: () => NotFoundPage(),
+    page: () => const NotFoundPage(),
   );
 
   // static final proxyRoute = GetPage(

@@ -1,14 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:get/get.dart';
 import 'package:video_share/pages/not_found/not_found_page.dart';
 import 'package:video_share/pages/tencent_video/tencent_video.dart';
-import 'package:video_share/widget/anim_bg_demo_page.dart';
+import 'package:video_share/widget/search_bg_page.dart';
 import '../widget/custom_animated_bottom_bar.dart';
 
 class MyHomePage extends StatefulWidget {
+  const MyHomePage({Key? key}) : super(key: key);
+
   @override
   _MyHomePageState createState() => _MyHomePageState();
 }
@@ -23,11 +23,11 @@ class _MyHomePageState extends State<MyHomePage> {
 
   List<String> titles = ['腾讯视频', '搜索', '排名', '直播'];
 
-  List<Widget> _pages = [
-    TencentVideo(),
+  final List<Widget> _pages = [
+    const TencentVideo(),
     AnimBgDemoPage(),
-    NotFoundPage(),
-    NotFoundPage(),
+    const NotFoundPage(),
+    const NotFoundPage(),
   ];
 
   @override
@@ -74,19 +74,19 @@ class _MyHomePageState extends State<MyHomePage> {
             width: 20.0,
           ),
           title: Text(titles[0]),
-          activeColor: Color(0xffF4D144),
+          activeColor: const Color(0xffF4D144),
           inactiveColor: _inactiveColor,
           textAlign: TextAlign.center,
         ),
         MyBottomNavigationBarItem(
-          icon: Icon(Icons.search),
+          icon: const Icon(Icons.search),
           title: Text(titles[1]),
           activeColor: Colors.greenAccent,
           inactiveColor: _inactiveColor,
           textAlign: TextAlign.center,
         ),
         MyBottomNavigationBarItem(
-          icon: Icon(Icons.apps),
+          icon: const Icon(Icons.apps),
           title: Text(
             titles[2],
           ),
@@ -95,7 +95,7 @@ class _MyHomePageState extends State<MyHomePage> {
           textAlign: TextAlign.center,
         ),
         MyBottomNavigationBarItem(
-          icon: Icon(Icons.video_camera_front),
+          icon: const Icon(Icons.video_camera_front),
           title: Text(titles[3]),
           activeColor: Colors.blue,
           inactiveColor: _inactiveColor,

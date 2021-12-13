@@ -1,4 +1,4 @@
-import 'dart:developer';
+// ignore_for_file: unnecessary_brace_in_string_interps
 
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -20,11 +20,7 @@ class TencentVideo extends StatefulWidget {
 }
 
 class _TencentVideoState extends State<TencentVideo> {
-  final _baseUrl = Api().baseUrl;
-  final _home = Api.tVideoHome;
-  final _channelList = Api.tVideochannelList;
-  List<TVideoDataItemListData?> _data = [];
-  RxList _channelListData = [].obs;
+  final RxList _channelListData = [].obs;
   late EasyRefreshController _controller;
 
   @override
@@ -72,12 +68,13 @@ class _TencentVideoState extends State<TencentVideo> {
                       },
                       child: StaggeredGridView.countBuilder(
                         crossAxisCount: 4,
-                        padding: EdgeInsets.all(10),
+                        padding: const EdgeInsets.all(10),
                         itemCount:
                             Get.find<UpdateListController>()._data.length,
                         itemBuilder: (BuildContext context, int index) {
                           if (index == 0) {
                             return Obx(() => FirstItem(
+                                  // ignore: invalid_use_of_protected_member
                                   data: _channelListData.value,
                                 ));
                           } else {
@@ -111,6 +108,7 @@ class _TencentVideoState extends State<TencentVideo> {
 }
 
 class FirstItem extends StatefulWidget {
+  // ignore: prefer_typing_uninitialized_variables
   final data;
 
   const FirstItem({
@@ -124,15 +122,13 @@ class FirstItem extends StatefulWidget {
 
 class _FirstItemState extends State<FirstItem> {
   final _baseUrl = Api().baseUrl;
-  final _home = Api.tVideoHome;
   final _channelList = Api.tVideochannelList;
-  RxList _channelListData = [].obs;
+  final RxList _channelListData = [].obs;
   List<DropdownMenuItem<Object>>? _tabs = [];
-  Object? selectedItem = null;
+  Object? selectedItem;
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     _loading();
   }
@@ -146,15 +142,16 @@ class _FirstItemState extends State<FirstItem> {
     if (tVideoChannelDataResponse.status == Status.COMPLETED) {
       _channelListData.value = tVideoChannelDataResponse.data!.data;
       List<DropdownMenuItem<Object>>? res = [];
-      _channelListData.value.forEach((e) => {
-            res.add(
-              DropdownMenuItem(
-                  child: Row(children: <Widget>[
-                    Text('${e.key}', style: TextStyle(color: Colors.black)),
-                  ]),
-                  value: '${e.href}'),
-            )
-          });
+      // ignore: invalid_use_of_protected_member
+      for (var e in _channelListData.value) {
+        res.add(
+          DropdownMenuItem(
+              child: Row(children: <Widget>[
+                Text('${e.key}', style: const TextStyle(color: Colors.black)),
+              ]),
+              value: '${e.href}'),
+        );
+      }
       setState(() {
         _tabs = res;
       });
@@ -165,7 +162,7 @@ class _FirstItemState extends State<FirstItem> {
   }
 
   Future<ApiResponse<TVideoChannelList>> getChannelData() async {
-    dynamic res = await HttpUtils.get('${_baseUrl}${_channelList}');
+    dynamic res = await HttpUtils.get('$_baseUrl$_channelList');
     TVideoChannelList data = TVideoChannelList.fromJson(res);
     return ApiResponse.completed(data);
   }
@@ -173,9 +170,9 @@ class _FirstItemState extends State<FirstItem> {
   @override
   Widget build(BuildContext context) {
     return Container(
-        margin: EdgeInsets.only(bottom: 10),
+        margin: const EdgeInsets.only(bottom: 10),
         decoration: BoxDecoration(
-          color: Color.fromRGBO(255, 255, 215, 1),
+          color: const Color.fromRGBO(255, 255, 215, 1),
           border: Border.all(
               // 设置单侧边框的样式
               color: Colors.amber.shade600,
@@ -192,10 +189,10 @@ class _FirstItemState extends State<FirstItem> {
                 icon: Container(),
                 iconSize: 20,
                 iconEnabledColor: Colors.green.withOpacity(0.7),
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 17,
                 ),
-                hint: Center(
+                hint: const Center(
                     child: Text('请选择分类',
                         textAlign: TextAlign.center,
                         style: TextStyle(
@@ -218,7 +215,6 @@ class UpdateListController extends GetxController {
   final _loadMore = Api.tVideoLoadMore;
   dynamic selectedItem = "";
   // bool isLoading = true;
-  final _channelList = Api.tVideochannelList;
   List<TVideoDataItemListData?> _data = [];
   Map _offset = {};
 
@@ -229,20 +225,20 @@ class UpdateListController extends GetxController {
   }
 
   Future<ApiResponse<TVideoDataItemList>> getData({channel}) async {
-    dynamic res = await HttpUtils.get('${_baseUrl}${_home}',
-        params: {"channel": channel});
+    dynamic res =
+        await HttpUtils.get('$_baseUrl$_home', params: {"channel": channel});
     TVideoDataItemList data = TVideoDataItemList.fromJson(res);
     return ApiResponse.completed(data);
   }
 
   Future<ApiResponse<TVideoDataItemList>> getLoadMoreData() async {
-    if (!_offset.containsKey("${selectedItem}")) {
-      _offset["${selectedItem}"] = 1;
+    if (!_offset.containsKey("$selectedItem")) {
+      _offset["$selectedItem"] = 1;
     } else {
-      _offset["${selectedItem}"]++;
+      _offset["$selectedItem"]++;
     }
 
-    dynamic res = await HttpUtils.get('${_baseUrl}${_loadMore}', params: {
+    dynamic res = await HttpUtils.get('$_baseUrl$_loadMore', params: {
       "channel": selectedItem,
       "offset": _offset["${selectedItem}"]
     });
@@ -256,8 +252,9 @@ class UpdateListController extends GetxController {
 
     if (tVideoDataResponse.status == Status.COMPLETED) {
       var _appendData = tVideoDataResponse.data!.data!;
-      // _data.add([]..._appendData,);
-      _appendData.forEach((obj) => {_data.add(obj)});
+      for (var obj in _appendData) {
+        _data.add(obj);
+      }
       update();
     } else if (tVideoDataResponse.status == Status.ERROR) {
       String errMsg = tVideoDataResponse.exception!.getMessage();

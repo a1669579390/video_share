@@ -1,7 +1,3 @@
-import 'dart:convert';
-import 'dart:developer';
-
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class SearchModelController extends GetxController {
@@ -11,10 +7,10 @@ class SearchModelController extends GetxController {
   String _query = '';
   String get query => _query;
 
-  RxString _type = 'b'.obs;
+  final RxString _type = 'b'.obs;
   RxString get type => _type.obs.value;
 
-  RxString _key = ''.obs;
+  final RxString _key = ''.obs;
   RxString get key => _key.obs.value;
 
   bool _showMapping = false;

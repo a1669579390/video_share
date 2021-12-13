@@ -17,7 +17,7 @@ import 'package:video_share/utils/toast.dart';
 
 class InAppWebViewScreen extends StatefulWidget {
   @override
-  _InAppWebViewScreenState createState() => new _InAppWebViewScreenState();
+  _InAppWebViewScreenState createState() => _InAppWebViewScreenState();
 }
 
 class _InAppWebViewScreenState extends State<InAppWebViewScreen>
@@ -43,13 +43,13 @@ class _InAppWebViewScreenState extends State<InAppWebViewScreen>
   double progress = 0;
   RxInt tabsLength = 0.obs;
   final _baseUrl = Api().baseUrl;
+  // ignore: non_constant_identifier_names
   final _VideoDetails = Api.tVideoDetails;
   final urlController = TextEditingController();
   List<SplitList?> _data = [];
   List<Widget> _tabs = [];
   List<Widget> _tabViews = [];
-  RxInt _viewsHeight = 0.obs;
-  RxString _webUri = "".obs;
+  final RxInt _viewsHeight = 0.obs;
 
   late TabController _tabcontroller;
 
@@ -64,7 +64,7 @@ class _InAppWebViewScreenState extends State<InAppWebViewScreen>
   getTabs() async {
     List<Widget> tabs = [];
     List<Widget> tabViews = [];
-    _data.forEach((element) {
+    for (var element in _data) {
       tabs.add(Tab(text: '${element?.begin}--${element?.end}'));
       List<Widget> views = [];
       for (var d in element!.data!) {
@@ -84,7 +84,7 @@ class _InAppWebViewScreenState extends State<InAppWebViewScreen>
           runSpacing: 4.0, // 纵轴（垂直）方向间距
           alignment: WrapAlignment.start, //沿主轴方向居中
           children: views));
-    });
+    }
     setState(() {
       _tabs = tabs;
       _tabViews = tabViews;
@@ -154,11 +154,11 @@ class _InAppWebViewScreenState extends State<InAppWebViewScreen>
     return Scaffold(
       body: SafeArea(
         child: ConstrainedBox(
-          constraints: BoxConstraints.expand(),
+          constraints: const BoxConstraints.expand(),
           child: Stack(
             //指定未定位或部分定位widget的对齐方式
             children: <Widget>[
-              Container(
+              SizedBox(
                 height: 300,
                 child: InAppWebView(
                   key: webViewKey,
@@ -268,7 +268,7 @@ class _InAppWebViewScreenState extends State<InAppWebViewScreen>
                       tabs: _tabs),
                 ),
               ),
-              this._data.length > 0
+              _data.isNotEmpty
                   ? Obx(() => Positioned(
                       top: 350,
                       height: _data[_tabcontroller.index]!.data!.length <= 20
@@ -283,7 +283,7 @@ class _InAppWebViewScreenState extends State<InAppWebViewScreen>
                                   ? _viewsHeight.value + 100
                                   : _viewsHeight.value + 220,
                           child: TabBarView(
-                              physics: NeverScrollableScrollPhysics(),
+                              physics: const NeverScrollableScrollPhysics(),
                               controller: _tabcontroller,
                               children: _tabViews),
                         ),
@@ -324,14 +324,13 @@ class _InAppWebViewScreenState extends State<InAppWebViewScreen>
       _viewsHeight.value =
           (_data[_tabcontroller.index]!.data!.length / 5 * 30).toInt();
 
-      _tabcontroller
-        ..addListener(() {
-          if (_tabcontroller.index.toDouble() ==
-              _tabcontroller.animation!.value) {
-            _viewsHeight.value =
-                (_data[_tabcontroller.index]!.data!.length / 5 * 30).toInt();
-          }
-        });
+      _tabcontroller.addListener(() {
+        if (_tabcontroller.index.toDouble() ==
+            _tabcontroller.animation!.value) {
+          _viewsHeight.value =
+              (_data[_tabcontroller.index]!.data!.length / 5 * 30).toInt();
+        }
+      });
       getTabs();
     } else if (tVideoDataResponse.status == Status.ERROR) {
       String errMsg = tVideoDataResponse.exception!.getMessage();

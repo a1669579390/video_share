@@ -1,15 +1,13 @@
-import 'dart:developer';
-import 'dart:math';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:material_floating_search_bar/material_floating_search_bar.dart';
 
 import 'search_model.dart';
 
 class FloatingSearchAppBarExample extends StatelessWidget {
-  // const FloatingSearchAppBarExample({Key key}) : super(key: key);
+  const FloatingSearchAppBarExample({Key? key}) : super(key: key);
 
+  @override
   Widget build(BuildContext context) {
     Get.put(SearchModelController());
     RxString _type = Get.find<SearchModelController>().type;
@@ -42,12 +40,12 @@ class FloatingSearchAppBarExample extends StatelessWidget {
                   showIfOpened: false,
                   child: CircularButton(
                       icon: Get.find<SearchModelController>().showMapping
-                          ? Icon(Icons.arrow_downward_rounded)
-                          : Icon(Icons.menu),
+                          ? const Icon(Icons.arrow_downward_rounded)
+                          : const Icon(Icons.menu),
                       onPressed: () {
                         Get.find<SearchModelController>().setShowMapping();
                       })),
-              Text("${mapping[_type]}", style: TextStyle(fontSize: 11))
+              Text("${mapping[_type]}", style: const TextStyle(fontSize: 11))
             ],
             //搜索框右边图标
             actions: [
@@ -55,7 +53,7 @@ class FloatingSearchAppBarExample extends StatelessWidget {
                   ? FloatingSearchBarAction(
                       showIfOpened: true,
                       child: CircularButton(
-                          icon: Icon(Icons.search), onPressed: () {}),
+                          icon: const Icon(Icons.search), onPressed: () {}),
                     )
                   : FloatingSearchBarAction.searchToClear(),
             ],
