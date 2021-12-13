@@ -4,8 +4,8 @@ import 'package:material_floating_search_bar/material_floating_search_bar.dart';
 
 import 'search_model.dart';
 
-class FloatingSearchAppBarExample extends StatelessWidget {
-  const FloatingSearchAppBarExample({Key? key}) : super(key: key);
+class FloatingSearchAppBar extends StatelessWidget {
+  const FloatingSearchAppBar({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

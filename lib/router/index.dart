@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:video_share/pages/not_found/not_found_page.dart';
 import 'package:video_share/pages/tencent_video/tencent_video.dart';
-import 'package:video_share/widget/search_bg_page.dart';
-import '../widget/custom_animated_bottom_bar.dart';
+import 'package:video_share/pages/search/module.dart';
+import 'bottom_bar.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({Key? key}) : super(key: key);
@@ -25,7 +25,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   final List<Widget> _pages = [
     const TencentVideo(),
-    AnimBgDemoPage(),
+    SearchPage(),
     const NotFoundPage(),
     const NotFoundPage(),
   ];
@@ -33,18 +33,6 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        // appBar: AppBar(
-        //   // systemOverlayStyle: SystemUiOverlayStyle.light,
-        //   automaticallyImplyLeading: false,
-        //   title: Text(
-        //     titles[_currentIndex],
-        //     style: TextStyle(
-        //       color: Colors.black,
-        //       fontSize: 16,
-        //     ),
-        //   ),
-        //   backgroundColor: backgroundColor,
-        // ),
         backgroundColor: backgroundColor,
         body: getBody(_currentIndex),
         bottomNavigationBar: _buildBottomBar());
@@ -59,9 +47,6 @@ class _MyHomePageState extends State<MyHomePage> {
       itemCornerRadius: 24,
       curve: Curves.easeInOut,
       onItemSelected: (index) => {
-        // Get.toNamed("/page"),
-        // Navigator.of(context)
-        //     .push(MaterialPageRoute(builder: (context) => HomePage())),
         setState(() => {
               _currentIndex = index,
             })

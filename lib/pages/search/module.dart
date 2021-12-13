@@ -2,12 +2,9 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:simple_animations/simple_animations.dart';
 import 'package:supercharged/supercharged.dart';
-import 'package:video_share/pages/search/search_bar.dart';
-import 'package:video_share/pages/search/search_menu.dart';
+import 'package:video_share/pages/search/animated_background.dart';
 
-enum _ColorTween { color1, color2 }
-
-class AnimBgDemoPage extends StatelessWidget {
+class SearchPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -51,7 +48,7 @@ class AnimatedWave extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(builder: (context, constraints) {
-      return Container(
+      return SizedBox(
         height: height,
         width: constraints.biggest.width,
         child: LoopAnimation<double>(
@@ -97,58 +94,5 @@ class CurvePainter extends CustomPainter {
   @override
   bool shouldRepaint(CustomPainter oldDelegate) {
     return true;
-  }
-}
-
-class AnimatedBackground extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    final tween = MultiTween<_ColorTween>()
-      ..add(
-        _ColorTween.color1,
-        const Color.fromRGBO(211, 111, 22, .9)
-            .tweenTo(Colors.lightBlue.shade900),
-        3.seconds,
-      )
-      ..add(
-        _ColorTween.color2,
-        const Color.fromRGBO(11, 111, 12, .8)
-            .tweenTo(Colors.lightBlue.shade600),
-        3.seconds,
-      );
-
-    return MirrorAnimation<MultiTweenValues<_ColorTween>>(
-      tween: tween,
-      duration: tween.duration,
-      builder: (context, child, value) {
-        return Container(
-            decoration: BoxDecoration(
-                gradient: LinearGradient(
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                    colors: [
-                  Color(0xffF4D144), Colors.greenAccent,
-                  // value.get<Color>(_ColorTween.color1),
-                  // value.get<Color>(_ColorTween.color2)
-                ])),
-            child: Container(
-              padding: EdgeInsets.only(
-                  // top: MediaQuery.of(context).padding.top,
-                  ),
-              child: Stack(
-                children: [
-                  Positioned(
-                    child: FloatingSearchAppBarExample(),
-                  ),
-                  Positioned(
-                      top: MediaQuery.of(context).padding.top + 56,
-                      left: 10,
-                      child: SearchMenu())
-                ],
-              ),
-            ) // 这里传入widget
-            );
-      },
-    );
   }
 }
